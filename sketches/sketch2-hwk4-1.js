@@ -62,6 +62,11 @@ registerSketch('sk2', function (p) {
 
       let visibleHeight = avatarHeight * visibleRatio;
       let clipTop = avatarBottom - visibleHeight;
+      let avatarColor = p.lerpColor(
+        p.color(220, 45, 45),
+        p.color(40, 170, 80),
+        visibleRatio
+      );
 
       p.push();
       p.drawingContext.save();
@@ -76,7 +81,7 @@ registerSketch('sk2', function (p) {
       p.drawingContext.clip();
 
       // Draw avatar
-      p.stroke(0);
+      p.stroke(avatarColor);
       p.strokeWeight(4);
       p.noFill();
 
