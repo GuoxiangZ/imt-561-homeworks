@@ -8,18 +8,87 @@ registerSketch('sk2', function (p) {
 
   p.draw = function () {
     p.background(255);
-    p.noStroke();
-    p.fill(100, 150, 240);
-    p.textSize(32);
-    p.textAlign(p.CENTER, p.CENTER);
-    p.text('HWK #4. A', p.width / 2, p.height / 2);
 
-    // Draw frame as part of the sketch output.
+    const TOTAL_PLAYERS = 4;
+    const TIME_PER_PLAYER = 30; // seconds
+    const totalDuration = TOTAL_PLAYERS * TIME_PER_PLAYER;
+
+    // loop forever
+    let elapsed = (p.millis() / 1000) % totalDuration;
+    let currentPlayer = Math.floor(elapsed / TIME_PER_PLAYER);
+    let playerElapsed = elapsed % TIME_PER_PLAYER;
+
+
+    // ===== Layout =====
+    let startX = 140;
+    let gap = 170;
+    let baseY = 360;
+
+    for (let i = 0; i < TOTAL_PLAYERS; i++) {
+      let x = startX + i * gap;
+
+      let visibleRatio;
+
+      if (i < currentPlayer) {
+        visibleRatio = 0;
+      } else if (i === currentPlayer) {
+        visibleRatio = 1 - playerElapsed / TIME_PER_PLAYER;
+      } else {
+        visibleRatio = 1;
+      }
+
+
+      // Avatar clipping area: reveal only lower remaining part
+      let avatarTop = baseY - 110;
+      let avatarBottom = baseY + 100;
+      let avatarHeight = avatarBottom - avatarTop;
+
+      let visibleHeight = avatarHeight * visibleRatio;
+      let clipTop = avatarBottom - visibleHeight;
+
+      p.push();
+      p.drawingContext.save();
+
+      p.drawingContext.beginPath();
+      p.drawingContext.rect(
+        x - 60,
+        clipTop,
+        120,
+        visibleHeight
+      );
+      p.drawingContext.clip();
+
+      // Draw avatar
+      p.stroke(0);
+      p.strokeWeight(4);
+      p.noFill();
+
+      // head
+      p.ellipse(x, baseY - 80, 50, 50);
+
+      // body
+      p.line(x, baseY - 55, x, baseY + 30);
+
+      // arms
+      p.line(x, baseY - 25, x - 35, baseY + 10);
+      p.line(x, baseY - 25, x + 35, baseY + 10);
+
+      // legs
+      p.line(x, baseY + 30, x - 28, baseY + 85);
+      p.line(x, baseY + 30, x + 28, baseY + 85);
+
+      p.drawingContext.restore();
+      p.pop();
+
+
+    }
+
+
+    // ===== Frame =====
     p.noFill();
     p.stroke(0);
     p.strokeWeight(1);
     p.rect(0, 0, p.width - 1, p.height - 1);
   };
-
   p.windowResized = function () { p.resizeCanvas(CANVAS_SIZE, CANVAS_SIZE); };
 });
