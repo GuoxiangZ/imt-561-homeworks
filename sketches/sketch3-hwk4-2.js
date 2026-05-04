@@ -130,6 +130,22 @@ registerSketch('sk3', function (p) {
       p.textSize(13);
       p.text("$", x, y + 2);
     }
+      // ===== RIGHT PAGE: WORKED TIME TEXT =====
+    p.noStroke();
+    p.fill(35);
+    p.textAlign(p.CENTER, p.CENTER);
+
+    p.textSize(30);
+    p.text("Worked Time", 560, 230);
+
+    p.textSize(58);
+    p.text(workedHours + " H", 560, 320);
+
+    p.textSize(44);
+    p.text((workedMinutes % 60) + " M", 560, 410);
+
+    p.textSize(44);
+    p.text((workedSeconds % 60) + " S", 560, 500);
 
 
   };
