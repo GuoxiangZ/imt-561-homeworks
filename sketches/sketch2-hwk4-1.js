@@ -37,6 +37,23 @@ registerSketch('sk2', function (p) {
         visibleRatio = 1;
       }
 
+      // Time label
+      let remaining;
+      if (i < currentPlayer) {
+        remaining = 0;
+      } else if (i === currentPlayer) {
+        remaining = Math.ceil(TIME_PER_PLAYER - playerElapsed);
+      } else {
+        remaining = TIME_PER_PLAYER;
+      }
+
+      let timeStr = "0:" + (remaining < 10 ? "0" + remaining : remaining);
+
+      p.noStroke();
+      p.fill(0);
+      p.textSize(22);
+      p.textAlign(p.CENTER);
+      p.text(timeStr, x, baseY - 135);
 
       // Avatar clipping area: reveal only lower remaining part
       let avatarTop = baseY - 110;
