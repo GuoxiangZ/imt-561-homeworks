@@ -72,6 +72,65 @@ registerSketch('sk3', function (p) {
     p.vertex(670, 400);
     p.endShape(p.CLOSE);
 
+    // ===== WORK TIME DATA =====
+    // For now, use current time as a demo of accumulated work time.
+    // Later we can change this to a custom work-start timer.
+    let workedHours = p.hour() % 8;
+    let workedMinutes = p.minute();
+    let workedSeconds = p.second();
+
+    let hourUnits = workedHours;                 // 1 stack = 1 hour
+    let minuteUnits = Math.floor(workedMinutes / 10); // 1 bill = 10 minutes
+    let secondUnits = Math.floor(workedSeconds / 10); // 1 coin = 10 seconds
+
+    // ===== DRAW MONEY UNITS INSIDE LEFT PAGE =====
+    p.noStroke();
+    p.textAlign(p.CENTER, p.CENTER);
+
+    // ---- HOURS: money stacks, each stack = 1 hour ----
+    for (let i = 0; i < hourUnits; i++) {
+      let x = 150 + (i % 3) * 85;
+      let y = 230 + Math.floor(i / 3) * 65;
+
+      // stack layers
+      p.fill(65, 145, 80);
+      p.rect(x, y + 10, 60, 35, 6);
+      p.fill(80, 165, 95);
+      p.rect(x, y + 5, 60, 35, 6);
+      p.fill(95, 185, 110);
+      p.rect(x, y, 60, 35, 6);
+
+      p.fill(255);
+      p.textSize(18);
+      p.text("$", x + 30, y + 18);
+    }
+
+    // ---- MINUTES: bills, each bill = 10 minutes ----
+    for (let i = 0; i < minuteUnits; i++) {
+      let x = 145 + (i % 4) * 65;
+      let y = 405 + Math.floor(i / 4) * 45;
+
+      p.fill(90, 175, 105);
+      p.rect(x, y, 48, 28, 5);
+
+      p.fill(255);
+      p.textSize(15);
+      p.text("$", x + 24, y + 14);
+    }
+
+    // ---- SECONDS: coins, each coin = 10 seconds ----
+    for (let i = 0; i < secondUnits; i++) {
+      let x = 155 + (i % 5) * 45;
+      let y = 535 + Math.floor(i / 5) * 38;
+
+      p.fill(205, 170, 55);
+      p.circle(x, y, 26);
+
+      p.fill(255);
+      p.textSize(13);
+      p.text("$", x, y + 2);
+    }
+
 
   };
 
