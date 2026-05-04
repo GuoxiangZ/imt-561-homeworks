@@ -97,7 +97,17 @@ registerSketch('sk2', function (p) {
       p.drawingContext.restore();
       p.pop();
 
-
+      if (i < currentPlayer) {
+        p.fill(120);
+        p.noStroke();
+        p.textSize(16);
+        p.text("spoken", x, baseY + 130);
+      } else if (i === currentPlayer) {
+        p.fill(0);
+        p.noStroke();
+        p.textSize(16);
+        p.text("speaking", x, baseY + 130);
+      }
     }
 
 
