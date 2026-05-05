@@ -45,15 +45,15 @@
         <div class="welcome-profile">
           <div class="welcome-photo" role="img" aria-label="Profile photo placeholder">
             <!-- Replace with your own photo -->
-            <!-- <img src="images/your-photo.jpg" alt="Photo of [Your name]" /> -->
-            <span>Add a photo</span>
+            <img src="images/your-photo.jpg" alt="Photo of [Your name]" />
+            <!-- <span>Add a photo</span> -->
           </div>
 
           <div class="welcome-copy">
-            <p><strong>Guoxiang Zhao</strong> ([optional pronouns])</p>
-            <p>I am a master’s student in [program], focused on [interest area or domain].</p>
-            <p>This quarter I want to get better at [analysis, storytelling, interaction design, etc.].</p>
-            <p>One dataset or topic I am excited to visualize is [topic], because [short reason].</p>
+            <p><strong>Guoxiang Zhao</strong> </p>
+            <p>I am a master’s student in MSIM.</p>
+            <p>This quarter I want to get better at data visualization.</p>
+            <p>One dataset or topic I am excited to visualize is F1 racing data, because I personally enjoy watching F1 games.</p>
           </div>
         </div>
       </div>
@@ -65,31 +65,53 @@
       <div id="sketch-drawing-sk2" class="sketch-evolution">
         <div class="welcome-template hwk-template" aria-labelledby="sk2-notes-title">
           <h3 id="sk2-notes-title">Documenting iterative process</h3>
-          <p class="small-note">Replace placeholders with your own notes and images.</p>
+          <!-- <p class="small-note">Replace placeholders with your own notes and images.</p> -->
           <p>
-            Context of use: Explain where your clocks/timers would be used, by whom, and what problem they help solve. [add 2-3 sentences]
+            This clock is designed for group settings (under work context) such as meetings, presentations, 
+            or discussions where multiple participants take turns speaking. 
+            It helps ensure that speaking time is distributed fairly and that each participant is aware of their remaining time. 
+            By visualizing time through fading avatars, it reduces the need for strict verbal time enforcement and improves coordination within the group.
           </p>
 
           <article class="clock-template">
             <h4>Final Clock 1</h4>
-            <p class="small-note">Sketch iteration documentation (paper/hand-drawn photos)</p>
+            <!-- <p class="small-note">Sketch iteration documentation (paper/hand-drawn photos)</p> -->
             <div class="iteration-grid">
               <figure class="iteration-item">
-                <!-- <img src="images/clock1-sketch1.jpg" alt="Clock 1 sketch iteration 1" /> -->
-                <div class="image-placeholder">Clock 1 sketch photo 1</div>
+                <img src="images/clock1-sketch1.jpg" alt="Clock 1 sketch iteration 1" />
+                <!-- <div class="image-placeholder">Clock 1 sketch photo 1</div> -->
+                 <figcaption>Step 1 — Avatar-Based Time Representation</figcaption>
               </figure>
               <figure class="iteration-item">
-                <!-- <img src="images/clock1-sketch2.jpg" alt="Clock 1 sketch iteration 2" /> -->
-                <div class="image-placeholder">Clock 1 sketch photo 2</div>
+                <img src="images/clock1-sketch2.jpg" alt="Clock 1 sketch iteration 2" />
+                <!-- <div class="image-placeholder">Clock 1 sketch photo 2</div> -->
+                 <figcaption>Step 2 — Adding Speaking Status Labels</figcaption>
+              </figure>
+              <figure class="iteration-item">
+                <img src="images/clock1-sketch3.jpg" alt="Clock 1 sketch iteration 2" />
+                <!-- <div class="image-placeholder">Clock 1 sketch photo 2</div> -->
+                 <figcaption>Step 3 — Color Gradient for Urgency</figcaption>
               </figure>
             </div>
             <p>
-              Design process: In 1–2 paragraphs (or bullet points), explain how this clock evolved from sketches to final
-              form. Name the information visualization principles you applied (readability, hierarchy, color, layout,
-              interaction, accessibility). [mention 2-3 design decisions and why]
+              Design process:</strong><br>
+              Step 1 – Avatar-Based Time Representation</strong><br>
+              The initial concept represents each speaker as an avatar with a fixed amount of time. 
+              Each avatar includes a timer and gradually fades away as the speaking time decreases. 
+              This establishes a direct mapping between time and visual change, allowing users to intuitively understand how much time remains.
+              <br><br>
+              Step 2 – Adding Speaking Status Labels</strong><br>
+              To improve clarity, labels such as “speaking” and “spoken” were added to indicate the current speaker and those who have already finished. 
+              This enhances readability and provides a clearer structure of the speaking order, helping users quickly understand the flow of the discussion.
+              <br><br>
+              Step 3 – Color Gradient for Urgency</strong><br>
+              To make the passage of time more visually intuitive, color transitions were introduced, where avatars change from green to yellow to red as time runs out. 
+              This strengthens visual hierarchy and urgency, allowing users to quickly assess remaining time at a glance without focusing on numerical values.
             </p>
             <p>
-              Self-reflection / future work: What would you improve next, and why? [add two improvements you'd make and explain why]
+              Self-reflection / future work: One improvement would be to refine the visual transitions, making the fading and color changes smoother and more continuous. This would improve readability and make the passage of time feel more natural.
+
+              Another improvement would be to introduce interaction, such as allowing users to adjust speaking time or manually switch turns. This would make the system more flexible and adaptable to different meeting formats and group sizes.
             </p>
           </article>
         </div>
@@ -102,30 +124,56 @@
       <div id="sketch-drawing-sk3" class="sketch-evolution">
         <div class="welcome-template hwk-template" aria-labelledby="sk3-notes-title">
           <h3 id="sk3-notes-title">Documenting iterative process</h3>
-          <p class="small-note">Replace placeholders with your own notes and images.</p>
           <p>
-            Context of use: Explain where your clocks/timers would be used, by whom, and what problem they help solve. [add 2-3 sentences]
+            Context of use: This clock is designed for a working context where users want to track how much time they have spent working and how much time remains until the end of the workday.
+             It helps make work time more tangible by translating it into value (money) while also providing a countdown to going home. This supports both motivation and time awareness during long work periods.
           </p>
 
           <article class="clock-template">
             <h4>Final Clock 2</h4>
-            <p class="small-note">Sketch iteration documentation (paper/hand-drawn photos)</p>
+         
             <div class="iteration-grid">
               <figure class="iteration-item">
-                <!-- <img src="images/clock2-sketch1.jpg" alt="Clock 2 sketch iteration 1" /> -->
-                <div class="image-placeholder">Clock 2 sketch photo 1</div>
+                <img src="images/clock2-sketch1.jpg" alt="Clock 2 sketch iteration 1" />
+                <!-- <div class="image-placeholder">Clock 2 sketch photo 1</div> -->
+                 <figcaption>Step 1 — Time as Monetary Representation</figcaption>
               </figure>
               <figure class="iteration-item">
-                <!-- <img src="images/clock2-sketch2.jpg" alt="Clock 2 sketch iteration 2" /> -->
-                <div class="image-placeholder">Clock 2 sketch photo 2</div>
+                <img src="images/clock2-sketch2.jpg" alt="Clock 2 sketch iteration 2" />
+                <!-- <div class="image-placeholder">Clock 2 sketch photo 2</div> -->
+                 <figcaption>Step 2 — Adding Structured Information Layout</figcaption>
+              </figure>
+              <figure class="iteration-item">
+                <img src="images/clock2-sketch3.jpg" alt="Clock 2 sketch iteration 2" />
+                <!-- <div class="image-placeholder">Clock 2 sketch photo 2</div> -->
+                 <figcaption>Step 3 — Refinement with Container and Layout Design</figcaption>
               </figure>
             </div>
             <p>
-              Design process: In 1–2 paragraphs (or bullet points), explain your iterations and final decisions. Make
-              explicit which visualization considerations shaped the result. [mention 2-3 design decisions and why]
+              Design process:</strong><br>
+              Step 1 – Time as Monetary Representation</strong><br>
+              The initial concept maps working time to different monetary units, 
+              where hours are represented as stacks of money, minutes as bills, 
+              and seconds as coins. 
+              This creates a clear visual hierarchy and makes time feel more concrete by translating it into value rather than abstract numbers.
+              <br><br>
+              Step 2 – Adding Structured Information Layout</strong><br>
+              To improve clarity, the design was reorganized into two sections: 
+              accumulated work time and remaining time to go home. 
+              This separation enhances readability and allows users to easily understand both how much they have worked and how much time is left, 
+              supporting better time awareness and planning.
+              <br><br>
+              Step 3 – Refinement with Container and Layout Design</strong><br>
+              In the final iteration, the design was placed inside a wallet-like container, 
+              reinforcing the concept of money and value. 
+              The layout separates visual elements (money icons) from numerical information, 
+              improving visual hierarchy and reducing clutter. 
+              This makes the design more cohesive and aligns the visual metaphor with the working context.
             </p>
             <p>
-              Self-reflection / future work: What would you improve next, and why? [add two improvements you'd make and explain why]
+             Self-reflection / future work: If I continue improving this design, I would focus on how to represent larger amounts of time more effectively. Currently, the number of visual elements on the left side is limited, so when the working time becomes longer, it is harder to reflect that increase clearly. A more scalable representation could make the design more practical.
+
+             I would also like to explore using a lighter color palette and more dynamic visual effects for the overall clock. This could help make the experience feel more relaxed and engaging, and potentially reduce the sense of fatigue during long working periods.
             </p>
           </article>
         </div>
