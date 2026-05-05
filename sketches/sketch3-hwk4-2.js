@@ -73,81 +73,175 @@ registerSketch('sk3', function (p) {
     p.endShape(p.CLOSE);
 
     // ===== WORK TIME DATA =====
-    // For now, use current time as a demo of accumulated work time.
-    // Later we can change this to a custom work-start timer.
-    let workedHours = p.hour() % 8;
-    let workedMinutes = p.minute();
-    let workedSeconds = p.second();
+     
+    // Accumulated timer since the sketch starts
+    let totalWorkedSeconds = Math.floor(p.millis() / 1000);
+    
 
-    let hourUnits = workedHours;                 // 1 stack = 1 hour
-    let minuteUnits = Math.floor(workedMinutes / 10); // 1 bill = 10 minutes
-    let secondUnits = Math.floor(workedSeconds / 10); // 1 coin = 10 seconds
+    let workedHours = Math.floor(totalWorkedSeconds / 3600);
+    let workedMinutes = Math.floor((totalWorkedSeconds % 3600) / 60);
+    let workedSeconds = totalWorkedSeconds % 60;
 
-    // ===== DRAW MONEY UNITS INSIDE LEFT PAGE =====
+    // Full units + partial progress
+    let displayHourUnits = Math.min(workedHours, 6);
+    let hiddenHourUnits = Math.max(workedHours - 6, 0);
+    let hourProgress = workedMinutes / 60;
+
+    let fullMinuteUnits = Math.floor(workedMinutes / 10); 
+    let minuteProgress = (workedMinutes % 10) / 10;  // next bill gradually appears
+
+    let fullSecondUnits = Math.floor(workedSeconds / 10);
+    let secondProgress = (workedSeconds % 10) / 10;  // next coin gradually appears
+
+    // ===== LEFT PAGE LABELS =====
     p.noStroke();
+    p.fill(70);
+    p.textAlign(p.LEFT, p.CENTER);
+    p.textSize(16);
+    p.text("Hours", 105, 195);
+    p.text("Minutes", 105, 375);
+    p.text("Seconds", 105, 525);
+
     p.textAlign(p.CENTER, p.CENTER);
 
-    // ---- HOURS: money stacks, each stack = 1 hour ----
-    for (let i = 0; i < hourUnits; i++) {
-      let x = 150 + (i % 3) * 85;
-      let y = 230 + Math.floor(i / 3) * 65;
+    // Helper: draw stack
+    function drawMoneyStack(x, y, alpha, scaleFactor) {
+      p.push();
+      p.translate(x, y);
+      p.scale(scaleFactor);
 
-      // stack layers
-      p.fill(65, 145, 80);
-      p.rect(x, y + 10, 60, 35, 6);
-      p.fill(80, 165, 95);
-      p.rect(x, y + 5, 60, 35, 6);
-      p.fill(95, 185, 110);
-      p.rect(x, y, 60, 35, 6);
+      p.fill(65, 145, 80, alpha);
+      p.rect(0, 18, 70, 35, 7);
 
-      p.fill(255);
-      p.textSize(18);
-      p.text("$", x + 30, y + 18);
+      p.fill(80, 165, 95, alpha);
+      p.rect(0, 9, 70, 35, 7);
+
+      p.fill(95, 185, 110, alpha);
+      p.rect(0, 0, 70, 35, 7);
+
+      p.fill(255, alpha);
+      p.textSize(20);
+      p.text("$", 35, 18);
+
+      p.pop();
     }
 
-    // ---- MINUTES: bills, each bill = 10 minutes ----
-    for (let i = 0; i < minuteUnits; i++) {
-      let x = 145 + (i % 4) * 65;
-      let y = 405 + Math.floor(i / 4) * 45;
+    // Helper: draw bill
+    function drawBill(x, y, alpha, scaleFactor) {
+      p.push();
+      p.translate(x, y);
+      p.scale(scaleFactor);
 
-      p.fill(90, 175, 105);
-      p.rect(x, y, 48, 28, 5);
+      p.fill(90, 175, 105, alpha);
+      p.rect(0, 0, 52, 30, 6);
 
-      p.fill(255);
-      p.textSize(15);
-      p.text("$", x + 24, y + 14);
+      p.fill(255, alpha);
+      p.textSize(16);
+      p.text("$", 26, 15);
+
+      p.pop();
     }
 
-    // ---- SECONDS: coins, each coin = 10 seconds ----
-    for (let i = 0; i < secondUnits; i++) {
-      let x = 155 + (i % 5) * 45;
-      let y = 535 + Math.floor(i / 5) * 38;
+    // Helper: draw coin
+    function drawCoin(x, y, alpha, scaleFactor) {
+      p.push();
+      p.translate(x, y);
+      p.scale(scaleFactor);
 
-      p.fill(205, 170, 55);
-      p.circle(x, y, 26);
+      p.fill(205, 170, 55, alpha);
+      p.circle(0, 0, 28);
 
-      p.fill(255);
+      p.fill(255, alpha);
       p.textSize(13);
-      p.text("$", x, y + 2);
+      p.text("$", 0, 2);
+
+      p.pop();
+    }
+
+    // ===== HOURS AREA =====
+    // ===== HOURS AREA =====
+    let hourStartX = 115;
+    let hourStartY = 225;
+    let hourGapX = 90;
+    let hourGapY = 70;
+
+    for (let i = 0; i < displayHourUnits; i++) {
+      let x = hourStartX + (i % 3) * hourGapX;
+      let y = hourStartY + Math.floor(i / 3) * hourGapY;
+      drawMoneyStack(x, y, 255, 0.9);
+    }
+
+    // partial next hour stack
+    if (workedHours < 6 && hourProgress > 0) {
+      let i = workedHours;
+      let x = hourStartX + (i % 3) * hourGapX;
+      let y = hourStartY + Math.floor(i / 3) * hourGapY;
+      drawMoneyStack(x, y, 255 * hourProgress, 0.35 + 0.55 * hourProgress);
+    }
+
+    // If more than 6 hours, show "+N" instead of overflowing
+    if (hiddenHourUnits > 0) {
+      p.noStroke();
+      p.fill(70);
+      p.textAlign(p.CENTER, p.CENTER);
+      p.textSize(22);
+      p.text("+" + hiddenHourUnits + " more", 285, 345);
+    }
+
+    // ===== MINUTES AREA =====
+    let minuteStartX = 115;
+    let minuteStartY = 410;
+    let minuteGapX = 72;
+    let minuteGapY = 45;
+
+    for (let i = 0; i < fullMinuteUnits; i++) {
+      if (i >= 8) break; // avoid overlap
+      let x = minuteStartX + (i % 4) * minuteGapX;
+      let y = minuteStartY + Math.floor(i / 4) * minuteGapY;
+      drawBill(x, y, 255, 1);
+    }
+
+    // partial next 10-minute bill
+    if (fullMinuteUnits < 8 && minuteProgress > 0) {
+      let i = fullMinuteUnits;
+      let x = minuteStartX + (i % 4) * minuteGapX;
+      let y = minuteStartY + Math.floor(i / 4) * minuteGapY;
+      drawBill(x, y, 255 * minuteProgress, 0.4 + 0.6 * minuteProgress);
+    }
+
+    // ===== SECONDS AREA =====
+    let secondStartX = 125;
+    let secondStartY = 570;
+    let secondGapX = 45;
+    let secondGapY = 36;
+
+    for (let i = 0; i < fullSecondUnits; i++) {
+      if (i >= 6) break;
+      let x = secondStartX + (i % 6) * secondGapX;
+      let y = secondStartY + Math.floor(i / 6) * secondGapY;
+      drawCoin(x, y, 255, 1);
+    }
+
+    // partial next 10-second coin
+    if (fullSecondUnits < 6 && secondProgress > 0) {
+      let i = fullSecondUnits;
+      let x = secondStartX + (i % 6) * secondGapX;
+      let y = secondStartY + Math.floor(i / 6) * secondGapY;
+      drawCoin(x, y, 255 * secondProgress, 0.4 + 0.6 * secondProgress);
     }
       // ===== RIGHT PAGE: WORKED TIME TEXT =====
-    p.noStroke();
-    p.fill(35);
-    p.textAlign(p.CENTER, p.CENTER);
+      p.noStroke();
+      p.fill(35);
+      p.textAlign(p.CENTER, p.CENTER);
 
-    p.textSize(30);
-    p.text("Worked Time", 560, 230);
+      p.textSize(58);
+      p.text(workedHours + " H", 560, 320);
 
-    p.textSize(58);
-    p.text(workedHours + " H", 560, 320);
+      p.textSize(44);
+      p.text((workedMinutes % 60) + " M", 560, 410);
 
-    p.textSize(44);
-    p.text((workedMinutes % 60) + " M", 560, 410);
-
-    p.textSize(44);
-    p.text((workedSeconds % 60) + " S", 560, 500);
-
-
+      p.textSize(44);
+      p.text((workedSeconds % 60) + " S", 560, 500);
   };
 
   p.windowResized = function () { p.resizeCanvas(CANVAS_SIZE, CANVAS_SIZE); };
