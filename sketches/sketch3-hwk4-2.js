@@ -159,7 +159,7 @@ registerSketch('sk3', function (p) {
     }
 
     // ===== HOURS AREA =====
-    // ===== HOURS AREA =====
+    
     let hourStartX = 115;
     let hourStartY = 225;
     let hourGapX = 90;
@@ -242,6 +242,28 @@ registerSketch('sk3', function (p) {
 
       p.textSize(44);
       p.text((workedSeconds % 60) + " S", 560, 500);
+      // ===== BACK HOME COUNTDOWN =====
+      // Assume a full workday is 8 hours
+      let workdaySeconds = 8 * 3600;
+      let remainingSeconds = Math.max(workdaySeconds - totalWorkedSeconds, 0);
+
+      let remainingHours = Math.floor(remainingSeconds / 3600);
+      let remainingMinutes = Math.floor((remainingSeconds % 3600) / 60);
+      let remainingSecs = remainingSeconds % 60;
+
+      p.noStroke();
+      p.fill(35);
+      p.textAlign(p.CENTER, p.CENTER);
+
+      p.textSize(28);
+      p.text("Back home in", 400, 710);
+
+      p.textSize(32);
+      p.text(
+        remainingHours + " H  " + remainingMinutes + " M  " + remainingSecs + " S",
+        400,
+        755
+      );
   };
 
   p.windowResized = function () { p.resizeCanvas(CANVAS_SIZE, CANVAS_SIZE); };
