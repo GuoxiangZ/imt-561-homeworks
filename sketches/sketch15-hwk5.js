@@ -27,6 +27,7 @@ registerSketch('sk15', function (p) {
     const top = 265;
     const bottom = 620;
     const chartW = right - left;
+    let hoveredPoint = null;
 
     function yMap(salary) {
       return p.map(salary, minSalary, maxSalary, bottom, top);
@@ -155,10 +156,23 @@ registerSketch('sk15', function (p) {
         const pt = pts[j];
         const offset = labelOffsets[j];
 
+        const isHovered = p.dist(p.mouseX, p.mouseY, pt.x, pt.y) < 10;
+
+        if (isHovered) {
+          hoveredPoint = {
+            x: pt.x,
+            y: pt.y,
+            field: d.short,
+            education: pt.edu,
+            salary: pt.salary,
+            color: d.color
+          };
+        }
+
         p.fill(withAlpha(d.color, eduAlpha[j]));
         p.stroke(d.color);
-        p.strokeWeight(2.5);
-        p.circle(pt.x, pt.y, 15);
+        p.strokeWeight(isHovered ? 4 : 2.5);
+        p.circle(pt.x, pt.y, isHovered ? 20 : 15);
 
         p.noStroke();
         p.fill(35);
@@ -242,7 +256,47 @@ registerSketch('sk15', function (p) {
       p.strokeWeight(2);
       p.circle(x, 724, 13);
     }
+    // Hover tooltip
+    if (hoveredPoint) {
+      const boxW = 145;
+      const boxH = 72;
 
+      let boxX = hoveredPoint.x + 14;
+      let boxY = hoveredPoint.y - 82;
+
+      if (boxX + boxW > p.width - 20) {
+        boxX = hoveredPoint.x - boxW - 14;
+      }
+
+      if (boxY < 20) {
+        boxY = hoveredPoint.y + 18;
+      }
+
+      p.fill(255);
+      p.stroke(180);
+      p.strokeWeight(1);
+      p.rect(boxX, boxY, boxW, boxH, 8);
+
+      p.noStroke();
+      p.fill(hoveredPoint.color);
+      p.rect(boxX, boxY, boxW, 22, 8, 8, 0, 0);
+
+      p.fill(255);
+      p.textAlign(p.LEFT, p.CENTER);
+      p.textSize(12);
+      p.textStyle(p.BOLD);
+      p.text(hoveredPoint.field, boxX + 10, boxY + 11);
+
+      p.textStyle(p.NORMAL);
+      p.fill(35);
+      p.textAlign(p.LEFT, p.TOP);
+      p.textSize(12);
+      p.text(
+        hoveredPoint.education + "\n" + moneyLabel(hoveredPoint.salary),
+        boxX + 10,
+        boxY + 32
+      );
+    }
     // Footer
     p.noStroke();
     p.fill(90);
